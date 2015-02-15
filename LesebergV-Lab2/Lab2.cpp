@@ -13,7 +13,7 @@
 using namespace std;
 
 typedef enum { red = 'R', yellow = 'Y', proceed = '-', draw } player;
-const int ARRAY_SIZE = 10;
+const int ARRAY_SIZE = 9;
 const int COLUMN_WIDTH = 4;
 
 void GetFirstPlayer(player &firstPlayer, player &secondPlayer);
