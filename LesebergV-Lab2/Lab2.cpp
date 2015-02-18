@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <cmath>
 #include "Functions.h"
+#include <Windows.h>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ player CheckDiagonalBackward(player matrix[][ARRAY_SIZE], int j = 0, int i = ARR
 player CheckDraw(player matrix[][ARRAY_SIZE]);
 player CheckRowInternal(player matrix[][ARRAY_SIZE], int j, int i = 0, int counter = 0);
 player CheckCollumnInternal(player matrix[][ARRAY_SIZE], int i, int j = 0, int counter = 0);
+void TextColor(string color);
+
 
 int main(void)
 {
@@ -143,8 +146,28 @@ void PrintBoard(player matrix[][ARRAY_SIZE])
 		cout << "-\n";
 		for (int j = 0; j < ARRAY_SIZE; j++)
 		{
-			cout << "| " << setw(COLUMN_WIDTH - 3)
-				 << static_cast<char>(matrix[i][j]) << " ";
+			if (matrix[i][j] == proceed)
+			{
+				cout << "| " << setw(COLUMN_WIDTH - 3)
+					<< "-" << " ";
+			}
+			else if (matrix[i][j] == red)
+			{
+				cout << "| ";
+				TextColor("red");
+				cout << setw(COLUMN_WIDTH - 3)
+		 			<< "O" << " ";
+				TextColor("default");
+			}
+			else
+			{
+				cout << "| ";
+				TextColor("yellow");
+				cout << setw(COLUMN_WIDTH - 3)
+					<< "O" << " ";
+				TextColor("default");
+			}
+			
 		}
 		cout << "|\n";
 	}
@@ -361,6 +384,37 @@ player CheckDiagonalBackward(player matrix[][ARRAY_SIZE], int j, int i, int coun
 		j++;
 		i--;
 		return CheckDiagonalBackward(matrix, j, i);
+	}
+
+}
+
+/// TextColor - 	Sets the text color for console output
+/// 			This sets the text color only, not the background color.
+///			Reset the text to "default" to print normal console text.
+///			Requires: #include <windows.h>
+///
+/// TextColor - 	Sets the text color for console output
+/// 			This sets the text color only, not the background color.
+///			Reset the text to "default" to print normal console text.
+///			Requires: #include <windows.h>
+///
+void TextColor(string color)
+{
+	if (color == "red")
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
+	}
+	else if (color == "yellow")
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0E);
+	}
+	else if (color == "white")
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x08);
+	}
+	else if (color == "default")
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
 	}
 
 }
