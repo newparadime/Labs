@@ -14,7 +14,7 @@
 using namespace std;
 
 typedef enum { red = 'R', yellow = 'Y', proceed = '-', draw } player;
-const int ARRAY_SIZE = 9;
+const int ARRAY_SIZE = 7;
 const int COLUMN_WIDTH = 4;
 
 void GetFirstPlayer(player &firstPlayer, player &secondPlayer);
@@ -24,8 +24,10 @@ void PrintBoard(player matrix[][ARRAY_SIZE]);
 player Winner(player matrix[][ARRAY_SIZE]);
 player CheckRow(player matrix[][ARRAY_SIZE]);
 player CheckCollumn(player matrix[][ARRAY_SIZE]);
-player CheckDiagonalForward(player matrix[][ARRAY_SIZE], int j = 0, int i = 0, int counter = 0);
-player CheckDiagonalBackward(player matrix[][ARRAY_SIZE], int j = 0, int i = ARRAY_SIZE - 1, int counter = 0);
+player CheckDiagonalForwardInternal(player matrix[][ARRAY_SIZE], int j, int i = 0, int counter = 0);
+player CheckDiagonalBackwardInternal(player matrix[][ARRAY_SIZE], int j, int i = ARRAY_SIZE - 1, int counter = 0);
+player CheckDiagonalForward(player matrix[][ARRAY_SIZE]);
+player CheckDiagonalBackward(player matrix[][ARRAY_SIZE]);
 player CheckDraw(player matrix[][ARRAY_SIZE]);
 player CheckRowInternal(player matrix[][ARRAY_SIZE], int j, int i = 0, int counter = 0);
 player CheckCollumnInternal(player matrix[][ARRAY_SIZE], int i, int j = 0, int counter = 0);
@@ -314,7 +316,30 @@ player CheckCollumnInternal(player matrix[][ARRAY_SIZE], int i, int j, int count
 
 }
 
-player CheckDiagonalForward(player matrix[][ARRAY_SIZE], int j, int i, int counter)
+player CheckDiagonalForward(player matrix[][ARRAY_SIZE])
+{
+	player winner = proceed;
+
+	for (int j = 0; j < ARRAY_SIZE - 2; j++)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalForwardInternal(matrix, j);
+		}
+		
+	}
+	for (int i = 0; i < ARRAY_SIZE - 2; i++)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalForwardInternal(matrix, 0, i);
+		}
+	}
+
+	return winner;
+}
+
+player CheckDiagonalForwardInternal(player matrix[][ARRAY_SIZE], int j, int i, int counter)
 {
 	if (counter == 3)
 	{
@@ -326,32 +351,61 @@ player CheckDiagonalForward(player matrix[][ARRAY_SIZE], int j, int i, int count
 		{
 			j++;
 			i++;
-			return CheckDiagonalForward(matrix, j, i);
+			return CheckDiagonalForwardInternal(matrix, j, i);
 		}
 	}
+
 
 	else if (j >= ARRAY_SIZE - 1)
 	{
 		return proceed;
 	}
 
+	else if (i >= ARRAY_SIZE - 1)
+	{
+		return proceed;
+	}
+
+
 	else if (matrix[j][i] == matrix[j + 1][i + 1])
 	{
 		counter++;
 		j++;
 		i++;
-		return CheckDiagonalForward(matrix, j, i, counter);
+		return CheckDiagonalForwardInternal(matrix, j, i, counter);
 	}
 	else
 	{
 		j++;
 		i++;
-		return CheckDiagonalForward(matrix, j, i);
+		return CheckDiagonalForwardInternal(matrix, j, i);
 	}
 
 }
 
-player CheckDiagonalBackward(player matrix[][ARRAY_SIZE], int j, int i, int counter)
+player CheckDiagonalBackward(player matrix[][ARRAY_SIZE])
+{
+	player winner = proceed;
+
+	for (int j = 0; j < ARRAY_SIZE - 2; j++)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalBackwardInternal(matrix, j);
+		}
+
+	}
+	for (int i = ARRAY_SIZE - 1; i > 2; i--)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalBackwardInternal(matrix, 0, i);
+		}
+	}
+	return winner;
+}
+
+player CheckDiagonalBackwardInternal(player matrix[][ARRAY_SIZE], int j, int i, int counter)
 {
 	if (counter == 3)
 	{
@@ -363,11 +417,16 @@ player CheckDiagonalBackward(player matrix[][ARRAY_SIZE], int j, int i, int coun
 		{
 			j++;
 			i--;
-			return CheckDiagonalBackward(matrix, j, i);
+			return CheckDiagonalBackwardInternal(matrix, j, i);
 		}
 	}
 
 	else if (j >= ARRAY_SIZE - 1)
+	{
+		return proceed;
+	}
+
+	else if (i <= 0)
 	{
 		return proceed;
 	}
@@ -377,13 +436,13 @@ player CheckDiagonalBackward(player matrix[][ARRAY_SIZE], int j, int i, int coun
 		counter++;
 		j++;
 		i--;
-		return CheckDiagonalBackward(matrix, j, i, counter);
+		return CheckDiagonalBackwardInternal(matrix, j, i, counter);
 	}
 	else
 	{
 		j++;
 		i--;
-		return CheckDiagonalBackward(matrix, j, i);
+		return CheckDiagonalBackwardInternal(matrix, j, i);
 	}
 
 }
