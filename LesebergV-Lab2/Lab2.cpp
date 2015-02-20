@@ -13,10 +13,12 @@
 
 using namespace std;
 
-typedef enum { red = 'R', yellow = 'Y', proceed = '-', draw } player;
-const int ARRAY_SIZE = 7;
+//Initialize Constants and enum types
+enum player { red = 'R', yellow = 'Y', proceed = '-', draw };
+const int ARRAY_SIZE = 9;
 const int COLUMN_WIDTH = 4;
 
+//Functions Prototypes
 void GetFirstPlayer(player &firstPlayer, player &secondPlayer);
 void CreateBoard(player matrix[][ARRAY_SIZE]);
 void GetNextMove(player matrix[][ARRAY_SIZE], int height[ARRAY_SIZE], player redOrYellow);
@@ -36,24 +38,42 @@ void TextColor(string color);
 
 int main(void)
 {
+	//Initialize Variables for players and winners
 	player firstPlayer;
 	player secondPlayer;
 	player winner = proceed;
-	player board[ARRAY_SIZE][ARRAY_SIZE];
 
+	//Initialize Board Array
+	player board[ARRAY_SIZE][ARRAY_SIZE];
+	
+	//Initialize Height array for tracking next space in a collum
 	int height[ARRAY_SIZE]{0, 0, 0, 0};
 	
+	//Print welcome message ask the first play what color they want
 	GetFirstPlayer(firstPlayer, secondPlayer);
 
+	//Populate board array with values
 	CreateBoard(board);
+
+	//Print initial board to screen
 	PrintBoard(board);
 
+	//While the winner variable remains at the 'proceed' value
+	//	the game continues (empty spaces evaluate to 'proceed')
 	while (winner == proceed)
 	{
+		//Prompt player one to make their move
 		GetNextMove(board, height, firstPlayer);
+
+		//Print the board after their move
 		PrintBoard(board);
+
+		//Check the board for a winner, set winner equal
+		//	to the result of the function
 		winner = Winner(board);
 
+		//If the first player did not win, prompt the second player
+		//	to make a move and then print and check the board again
 		if (winner != firstPlayer)
 		{
 			GetNextMove(board, height, secondPlayer);
@@ -62,18 +82,34 @@ int main(void)
 		}
 	}
 
+	//Once the winner function returns a value other than 'proceed'
+	//	the while loop breaks...
+
+	//Prints the result of the game to the board.
 	if (winner == draw)
 	{
 		cout << "The game was a draw";
 	}
+	else if (winner == red)
+	{
+		TextColor("red");
+		cout << "The Red player wins";
+		TextColor("default");
+	}
 	else
 	{
-		cout << static_cast<char>(winner) << " wins!!";
+		TextColor("yellow");
+		cout << "The Yellow player wins";
+		TextColor("default");
 	}
 
 	return 0;
 }
 
+//--------------------
+//Functon asks the first player to select a color, and sets the 
+//	value of the other player to the unused color
+//--------------------
 void GetFirstPlayer(player &firstPlayer, player &secondPlayer)
 {
 	char inputPlayer;
@@ -100,6 +136,10 @@ void GetFirstPlayer(player &firstPlayer, player &secondPlayer)
 	}
 }
 
+//--------------------
+//This function uses a nested for loop to populate 
+//	the board array with 'blank space' values
+//--------------------
 void CreateBoard(player matrix[][ARRAY_SIZE])
 {
 	for (int i = 0; i < ARRAY_SIZE; i++)
@@ -111,6 +151,13 @@ void CreateBoard(player matrix[][ARRAY_SIZE])
 	}
 }
 
+//--------------------
+//This function receives an input from the player for which collum
+//	they wish to make their move in. It then uses a secondary one
+//	dimensional array 'height' to determine the row to place the 
+//	move in. It increments this 1D array after every move for the 
+//	appropriate collumn
+//--------------------
 void GetNextMove(player matrix[][ARRAY_SIZE], int height[], player redOrYellow)
 {
 	int move;
@@ -122,6 +169,15 @@ void GetNextMove(player matrix[][ARRAY_SIZE], int height[], player redOrYellow)
 
 	cin >> move;
 
+	while (move >= ARRAY_SIZE)
+	{
+		cout << "\nYou did not make a valid move,"
+			 << "\nplease select a collumn between 1 and "
+			 << ARRAY_SIZE << ": "; 
+
+		cin >> move;
+	}
+
 	cout << endl << endl;
 
 	collumn = move - 1;
@@ -131,6 +187,12 @@ void GetNextMove(player matrix[][ARRAY_SIZE], int height[], player redOrYellow)
 	height[collumn]++;
 }
 
+//--------------------
+//This function prints the board to the screen. It is formatted using
+//	for loops in this way so that the screen formatting will remain
+//	valid regardless of what the board size is set to. It will adapt
+// accordingly.
+//--------------------
 void PrintBoard(player matrix[][ARRAY_SIZE])
 {
 	for (int counter = 1; counter <= ARRAY_SIZE; counter++)
@@ -180,8 +242,20 @@ void PrintBoard(player matrix[][ARRAY_SIZE])
 	cout << "-\n\n\n";
 }
 
+//--------------------
+//This function checks the board array for a winner by checking
+//	each row, then each collum, then each diagonal. The 'internal'
+//	functions exists as recursive checking functions for each
+//	individual row/collum/diagonal and allow the program to
+//	adjust to increasing/decreasing board size
+//--------------------
 player Winner(player matrix[][ARRAY_SIZE])
 {
+	//The function uses the nested if statements because 
+	//	we don't need to check additional board areas
+	//	once we have found a winner, in fact it would
+	//	reset the winner variable and the game would
+	//	crash.
 	player winner = proceed;
 	
 	winner = CheckRow(matrix);
@@ -209,6 +283,10 @@ player Winner(player matrix[][ARRAY_SIZE])
 	return winner;
 }
 
+//--------------------
+//Checks all of the rows, but only calls the 'RowInternal' Function
+//	if there is not yet a winner.
+//--------------------
 player CheckRow(player matrix[][ARRAY_SIZE])
 {
 	player winner = proceed;
@@ -223,6 +301,9 @@ player CheckRow(player matrix[][ARRAY_SIZE])
 	return winner;
 }
 
+//--------------------
+//Same as above except for the collumns
+//--------------------
 player CheckCollumn(player matrix[][ARRAY_SIZE])
 {
 	player winner = proceed;
@@ -238,18 +319,88 @@ player CheckCollumn(player matrix[][ARRAY_SIZE])
 	return winner;
 }
 
-player CheckDraw(player matrix[][ARRAY_SIZE])
+//--------------------
+//Same as above except for the diagonals beginning in
+// array coordinate [0][0]
+//--------------------
+player CheckDiagonalForward(player matrix[][ARRAY_SIZE])
 {
 	player winner = proceed;
-	
-	if (matrix[ARRAY_SIZE - 1][0] != proceed)
+
+	for (int j = 0; j < ARRAY_SIZE - 2; j++)
 	{
-		winner = draw;
-		cout << static_cast<char>(winner);
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalForwardInternal(matrix, j);
+		}
+
+	}
+	for (int i = 0; i < ARRAY_SIZE - 2; i++)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalForwardInternal(matrix, 0, i);
+		}
+	}
+
+	return winner;
+}
+
+//--------------------
+//Same as above except for the diagonals beginning in
+// array coordinate [0][ARRAY_SIZE - 1]
+//--------------------
+player CheckDiagonalBackward(player matrix[][ARRAY_SIZE])
+{
+	player winner = proceed;
+
+	for (int j = 0; j < ARRAY_SIZE - 2; j++)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalBackwardInternal(matrix, j);
+		}
+
+	}
+	for (int i = ARRAY_SIZE - 1; i > 2; i--)
+	{
+		if (winner == proceed)
+		{
+			winner = CheckDiagonalBackwardInternal(matrix, 0, i);
+		}
 	}
 	return winner;
 }
 
+//--------------------
+//Checks the board for a draw by checking if the top row has any
+// remaining moves
+//--------------------
+player CheckDraw(player matrix[][ARRAY_SIZE])
+{
+	player winner = proceed;
+	
+	int counter = 0;
+
+	for (int i = 0; i < ARRAY_SIZE; i++)
+	{
+		if (matrix[ARRAY_SIZE - 1][i] != proceed)
+		{
+			counter++;
+		}
+	}
+	if (counter >= ARRAY_SIZE - 1)
+	{
+		winner = draw;
+	}
+	return winner;
+}
+
+//--------------------
+//Function that checks each individual row for 4 common values
+// (ignoring blank spaces) and once they are encountered, returns
+// the value of the last space checked.
+//--------------------
 player CheckRowInternal(player matrix[][ARRAY_SIZE], int j, int i, int counter)
 {
 	if (counter == 3)
@@ -282,6 +433,9 @@ player CheckRowInternal(player matrix[][ARRAY_SIZE], int j, int i, int counter)
 
 }
 
+//--------------------
+//See description for previous function, same but for collumns 
+//--------------------
 player CheckCollumnInternal(player matrix[][ARRAY_SIZE], int i, int j, int counter)
 {
 	if (counter == 3)
@@ -316,29 +470,10 @@ player CheckCollumnInternal(player matrix[][ARRAY_SIZE], int i, int j, int count
 
 }
 
-player CheckDiagonalForward(player matrix[][ARRAY_SIZE])
-{
-	player winner = proceed;
-
-	for (int j = 0; j < ARRAY_SIZE - 2; j++)
-	{
-		if (winner == proceed)
-		{
-			winner = CheckDiagonalForwardInternal(matrix, j);
-		}
-		
-	}
-	for (int i = 0; i < ARRAY_SIZE - 2; i++)
-	{
-		if (winner == proceed)
-		{
-			winner = CheckDiagonalForwardInternal(matrix, 0, i);
-		}
-	}
-
-	return winner;
-}
-
+//--------------------
+//See description for previous function, same but for diagonals,
+//	beginning in the corner [0][0] of the array
+//--------------------
 player CheckDiagonalForwardInternal(player matrix[][ARRAY_SIZE], int j, int i, int counter)
 {
 	if (counter == 3)
@@ -383,28 +518,10 @@ player CheckDiagonalForwardInternal(player matrix[][ARRAY_SIZE], int j, int i, i
 
 }
 
-player CheckDiagonalBackward(player matrix[][ARRAY_SIZE])
-{
-	player winner = proceed;
-
-	for (int j = 0; j < ARRAY_SIZE - 2; j++)
-	{
-		if (winner == proceed)
-		{
-			winner = CheckDiagonalBackwardInternal(matrix, j);
-		}
-
-	}
-	for (int i = ARRAY_SIZE - 1; i > 2; i--)
-	{
-		if (winner == proceed)
-		{
-			winner = CheckDiagonalBackwardInternal(matrix, 0, i);
-		}
-	}
-	return winner;
-}
-
+//--------------------
+//See description for previous function, same but for diagonals,
+//	beginning in the corner [0][0] of the array
+//--------------------
 player CheckDiagonalBackwardInternal(player matrix[][ARRAY_SIZE], int j, int i, int counter)
 {
 	if (counter == 3)
