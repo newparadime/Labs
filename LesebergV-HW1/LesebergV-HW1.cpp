@@ -29,7 +29,7 @@ int main(void)
 	numberPtr = &number;
 
 	//Program Messages - Output init value of number using dereffed pointer
-	cout << "This is the value of \'number\' called using the pointer \'numberPtr\': "
+	cout << "This is the value of \'number\' called using the pointer \'numberPtr\':\n"
 		<< *numberPtr << endl << endl;
 
 	//Function Call to Triple value of number, note that it is a void return
@@ -38,7 +38,7 @@ int main(void)
 	TripleDouble(numberPtr);
 
 	//Output value of number using dereffed pointer after tripling function
-	cout << "This is the value of \'number\' after the \"Triple Number\" function was called: "
+	cout << "This is the value of \'number\' after the \"Triple Number\" function was called:\n"
 		<< *numberPtr << endl << endl;
 
 	//Task 2
@@ -65,7 +65,7 @@ int main(void)
 
 	//Print value of array pointer after second assignment...they are the same
 	cout << "Pointed at the first element with the refrence operator,"
-		 << " the value of matrixPtr is: " << matrixPtr << " .\n\n";
+		 << " \nthe value of matrixPtr is: " << matrixPtr << " .\n\n";
 
 	//Print array using pointer addition and for loop
 	cout << "These are the values in the array: \n\n";
