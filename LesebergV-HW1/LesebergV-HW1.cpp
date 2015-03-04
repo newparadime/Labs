@@ -78,7 +78,7 @@ int main(void)
 	//Task 3
 	//Increase each value in array by one using pointer and single operation
 	//	Note attention to precedence of operations in the expression
-		while (matrixPtr <= &matrix[ARRAY_SIZE - 1])
+	while (matrixPtr <= &matrix[ARRAY_SIZE - 1])
 	{
 		++(*matrixPtr++);
 	}
