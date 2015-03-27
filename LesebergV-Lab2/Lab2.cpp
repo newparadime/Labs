@@ -169,7 +169,7 @@ void GetNextMove(player matrix[][ARRAY_SIZE], int height[], player redOrYellow)
 
 	cin >> move;
 
-	while (move >= ARRAY_SIZE)
+	while (move > ARRAY_SIZE)
 	{
 		cout << "\nYou did not make a valid move,"
 			 << "\nplease select a collumn between 1 and "
