@@ -1,16 +1,23 @@
+//////////////////////////////////////
+//Vinny Leseberg Lab 4
+//Header File For Circle Class
+//////////////////////////////////////
+
 #ifndef CIRCLE_H
 #define CIRCLE_H
 class Circle
 {
 public:
-	//Constructor
-	Circle();
-	Circle(double rad);
 	
-	//Predicate
+	//Constructors
+	Circle(double rad);
+	Circle();
+	
+	
+	//Predicate Functions
 	bool IsPoint();
 
-	//Accessor
+	//Accessor Functions
 	double GetRadius();
 	double GetDiameter();
 	double GetArea();
@@ -20,9 +27,10 @@ public:
 
 	void PrintDetails();
 
-	//Mutator
+	//Mutator Functions
 	void SetRadius(double rad);
 
+//Private Functions
 private:
 	double radius;
 };
