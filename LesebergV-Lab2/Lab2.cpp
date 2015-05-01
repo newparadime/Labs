@@ -169,6 +169,8 @@ void GetNextMove(player matrix[][ARRAY_SIZE], int height[], player redOrYellow)
 
 	cin >> move;
 
+	//This is where the error was...the >= needed to be a >
+	// as seen below
 	while (move > ARRAY_SIZE)
 	{
 		cout << "\nYou did not make a valid move,"

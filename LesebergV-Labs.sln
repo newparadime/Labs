@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-HW2", "LesebergV-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-Lab4", "LesebergV-Lab4\LesebergV-Lab4.vcxproj", "{596110DD-3D7F-4D17-A3A7-E279706D4991}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-BONUS", "LesebergV-BONUS\LesebergV-BONUS.vcxproj", "{A0944A42-66AA-4100-B928-C1572F51B55B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-Lab5", "LesebergV-Lab5\LesebergV-Lab5.vcxproj", "{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -45,6 +49,14 @@ Global
 		{596110DD-3D7F-4D17-A3A7-E279706D4991}.Debug|Win32.Build.0 = Debug|Win32
 		{596110DD-3D7F-4D17-A3A7-E279706D4991}.Release|Win32.ActiveCfg = Release|Win32
 		{596110DD-3D7F-4D17-A3A7-E279706D4991}.Release|Win32.Build.0 = Release|Win32
+		{A0944A42-66AA-4100-B928-C1572F51B55B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A0944A42-66AA-4100-B928-C1572F51B55B}.Debug|Win32.Build.0 = Debug|Win32
+		{A0944A42-66AA-4100-B928-C1572F51B55B}.Release|Win32.ActiveCfg = Release|Win32
+		{A0944A42-66AA-4100-B928-C1572F51B55B}.Release|Win32.Build.0 = Release|Win32
+		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Debug|Win32.Build.0 = Debug|Win32
+		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Release|Win32.ActiveCfg = Release|Win32
+		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
