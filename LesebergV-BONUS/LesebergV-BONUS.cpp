@@ -14,7 +14,7 @@ int const ARRAY_SIZE = 25;
 //Define Functions
 void Largest(int *const first, int *const last, int *largest);
 bool Value(int *matrix, int value, int* &positionPtr);
-int* NewArray(int *arraySize = new int);
+int* NewArray(int& arraySize);
 void clearBuffer();
 
 //Main Program Function
@@ -27,7 +27,7 @@ int main()
 
 	//Create Array for Task 1 (note that I use the function for task 3
 	// here, so I have ommited a separate test for Task 3)
-	matrixLargest = NewArray(&arraySize);
+	matrixLargest = NewArray(arraySize);
 
 	//Print First and Last Address of Task 1 Array
 	std::cout << "The address of the first element of this new array is: "
@@ -109,13 +109,13 @@ void Largest(int *const first, int *const last, int *largest)
 //Function to find the what address the value occurs at.
 // Note that the 'positionPtr' is a pointer that is passed
 // by reference, so that it can be changed.
-bool Value(int *matrix, int value, int* &positionPtr)
+bool Value(int* matrix, int value, int* &positionPtr)
 {
 	//Counter to determine if the value occurs multiple times
 	int counter = 0;
 
 	//Check array for occurances of value
-	for (int *i = matrix; i < &matrix[ARRAY_SIZE - 1]; i++)
+	for (int* i = matrix; i < &matrix[ARRAY_SIZE]; i++)
 	{
 		if (*i == value)
 		{
@@ -134,17 +134,16 @@ bool Value(int *matrix, int value, int* &positionPtr)
 // the address of a variable for the array size can be passed
 // fromfrom main. Otherwise the function creates a new integer
 // as default parameter for the pointer 'arraySize'.
-int* NewArray(int* arraySize)
+int* NewArray(int& arraySize)
 {
-	
-	bool tooBig;
+	int arraySize;
 	//Ask user for array size and read it in
 	std::cout << "Please input the size of the array you would like to create: ";
-	std::cin >> *arraySize;
+	std::cin >> arraySize;
 
 	//Check that the array size is a positive non zero integer
 	// if not continue to ask the user for a correct array size.
-	while (*arraySize <= 0 || std::cin.fail())
+	while (arraySize <= 0 || std::cin.fail())
 	{
 		//Checks if the input threw the fail bit (i.e. non int or int too large)
 		if (std::cin.fail())
@@ -156,19 +155,19 @@ int* NewArray(int* arraySize)
 			std::cout << "The size you entered overloaded the buffer\n"
 				<< "or was not an integer.\n"
 				<< "Please enter another number: ";
-			std::cin >> *arraySize;
+			std::cin >> arraySize;
 		}
 		//If fail bit was not set, ask 
 		else
 		{
 			std::cout << "You did not enter a positive value.\n"
 				<< "Please enter a positive value for the array length: ";
-			std::cin >> *arraySize;
+			std::cin >> arraySize;
 		}
 	}
 
 	//Create and the array and return its address
-	return new int[*arraySize];
+	return new int[arraySize];
 }
 
 //Function to clear the cin buffer of bad input

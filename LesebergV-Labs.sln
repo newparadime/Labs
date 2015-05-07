@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-BONUS", "Leseberg
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-Lab5", "LesebergV-Lab5\LesebergV-Lab5.vcxproj", "{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LesebergV-Lab6", "LesebergV-Lab6\LesebergV-Lab6.vcxproj", "{DF613526-649C-4A80-902B-4646EB1E33C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -57,6 +59,10 @@ Global
 		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Debug|Win32.Build.0 = Debug|Win32
 		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Release|Win32.ActiveCfg = Release|Win32
 		{F2C868E1-78DF-4F6E-A922-8367FFAD3ED6}.Release|Win32.Build.0 = Release|Win32
+		{DF613526-649C-4A80-902B-4646EB1E33C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF613526-649C-4A80-902B-4646EB1E33C2}.Debug|Win32.Build.0 = Debug|Win32
+		{DF613526-649C-4A80-902B-4646EB1E33C2}.Release|Win32.ActiveCfg = Release|Win32
+		{DF613526-649C-4A80-902B-4646EB1E33C2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
