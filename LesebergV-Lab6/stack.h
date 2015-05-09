@@ -1,30 +1,31 @@
 #ifndef STACK_H
 #define STACK_H
-#include "element.h"
-
-//struct element
-//{
-//	int value;
-//	element* previous;
-//};
 
 class stack	
 {
 public:
 	stack();
 	void push(int value);
-	virtual element* pop() = 0;
-	int peep() const;
+	virtual int* pop() = 0;
+	int* peep() const;
 	void clear();
-	void dump();
-	bool full() const;
+	void dump() const;
+	bool full();
 	bool empty() const;
 	int getSize() const;
+	int getMax() const;
 
 protected:		
 	int size;
-	element *first;
-	element *last;
+	int maxSize;
+	int* first;
+	int* last;
+	int* top;
+	int* bottom;
+	int inputSize(); 
+	void shiftDown();
+	int inputFail(int value);
+	void clearBuffer();
 };
 
 #endif

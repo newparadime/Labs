@@ -38,6 +38,7 @@ int main()
 		{
 			matrix[i] = new LIFO;
 		}
+		std::cout << "\n";
 	}
 	
 	Menu(matrix);
@@ -50,7 +51,7 @@ int main()
 
 void Welcome(int stackNum)
 {
-	std::cout << "Please select which type of stack you wish to"
+	std::cout << "Please select which type of stack you wish to "
 		<< "create for stack " << stackNum + 1 << ".\n"
 		<< "Enter 'F' for a FIFO or 'L' LIFO: ";
 }
@@ -68,7 +69,7 @@ bool Menu(stack** matrix)
 	int stackNum;
 	int option;
 
-	std::cout << "\nPlease select a stack (1-4), or enter zero if done: ";
+	std::cout << "Please select a stack (1-4), or enter zero if done: ";
 	std::cin >> stackNum;
 	std::cout << "\n";
 	if (stackNum)
@@ -124,7 +125,7 @@ void Pop(stack* currentStack)
 		{
 			std::cout << "The last entry of the stack has been \'popped\'.\n";
 		}
-		std::cout << "Its value is: " << currentStack->pop()->value << "\n\n";
+		std::cout << "Its value is: " << *currentStack->pop() << "\n\n";
 	}
 	else std::cout << "This stack is empty.\n\n";
 }
@@ -143,21 +144,16 @@ void Peep(stack* currentStack)
 	if (!currentStack->empty())
 	{
 		std::cout << "The last value added to the stack was "
-			<< currentStack->peep() << "\n\n";
+			<< *currentStack->peep() << "\n\n";
 	}
 	else std::cout << "The stack is empty.\n\n";
 }
 
 void Status(stack* currentStack)
 {
-	if (currentStack->full())
-	{
-		std::cout << "The stack is full\n\n";
-	}
-	else if (currentStack->empty())
-	{
-		std::cout << "The stack is empty\n\n";
-	}
-	else std::cout << "The stack has " << currentStack->getSize()
-		<< " elements in it.\n\n";
+	std::cout << "The stack has a capacity to store "
+		<< currentStack->getMax() << " elements." << "\n";
+	std::cout << "There is room to add an additional "
+		<< (currentStack->getMax() - currentStack->getSize())
+		<< " elements.\n\n";
 }

@@ -3,29 +3,13 @@
 
 FIFO::FIFO(){}
 
-element* FIFO::pop()
+int* FIFO::pop()
 {
-	element *temp = nullptr;
-
+	int* temp = last;
 	if (!this->empty())
 	{
-		temp = new element;
-
-		*temp = *first;
-		
-		delete first;
-
-		if (*temp == *last)
-		{
-			last = nullptr;
-			first = nullptr;
-		}
-		
-		else
-		{
-			first = temp->next;
-		}
-		size--;
+		*first++ = 0;
 	}
 	return temp;
 }
+

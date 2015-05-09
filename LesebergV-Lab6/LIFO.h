@@ -6,7 +6,7 @@ class LIFO : public stack
 {
 public:
 	LIFO();
-	element* pop();
+	int* pop();
 };
 
 #endif

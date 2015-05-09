@@ -3,29 +3,12 @@
 
 LIFO::LIFO(){}
 
-element* LIFO::pop()
+int* LIFO::pop()
 {
-	element* temp = nullptr;
-
+	int* temp = last;
 	if (!this->empty())
 	{
-		temp = new element;
-
-		*temp = *last;
-
-		delete last;
-
-		if (*temp == *first)
-		{
-			last = nullptr;
-			first = nullptr;
-		}
-
-		else
-		{
-			last = temp->previous;
-		}
-		size--;	
+		*last-- = 0;
 	}
 	return temp;
 }
